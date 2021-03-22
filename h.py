@@ -3,15 +3,14 @@ import numpy as np
 
 SAMPLERATE = 1000
 SUBCANVAS = 100
-NSUB = 25 # square natural
+NSUB = 36 # square natural
 
 def heysel_gen():
 
-	fs = [f for f in np.linspace(1,SAMPLERATE,NSUB)]
+	# fs = [f for f in np.linspace(1,SAMPLERATE,NSUB)]
+	fs = [f for f in range(1,NSUB+1)]
 
-	dg = sin_gen(100)
-
-	for img in consolidator([f_spiral_gen(f,dg) for f in fs]):
+	for img in consolidator([f_spiral_gen(f,sin_gen(3)) for f in fs]):
 		plt.imshow(img)
 		plt.show(block=False)
 		plt.pause(.001)
@@ -53,7 +52,7 @@ def f_spiral_gen(f,dg):
 def sin_gen(f):
 	while 1:
 		for t in range(SAMPLERATE):
-			yield(np.sin(t/SAMPLERATE*2*np.pi))
+			yield(np.sin(f*t/SAMPLERATE*2*np.pi))
 
 
 if __name__ == '__main__':
